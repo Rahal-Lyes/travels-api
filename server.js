@@ -1,11 +1,26 @@
-const dotenv=require('dotenv');//toujours doit etre le premier 
-dotenv.config({path:'./config.env'});//et ceci doit etre le 2
-const app=require('./app.js');
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
 
-const PORT = process.env.PORT;
-console.log(process.env);
-app.listen(PORT, function () {
-  console.log(`Running on port: ${PORT}`);
+const app = require('./app');
+const mongoose=require('mongoose');
+
+// Connexion à MongoDB
+const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+
+mongoose
+  .connect(process.env.LOCAL_DATABASE || DB)
+  .then(() => {
+    console.log('✅ Connected to MongoDB successfully');
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
+  });
+
+
+
+
+// Démarrage du serveur
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`🚀 App running on port ${port}...`);
 });
-
-
