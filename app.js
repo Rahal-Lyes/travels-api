@@ -19,13 +19,6 @@ app.use('/api/v1/tours', tourRouter);
 
 
 app.all('*',(req,res,next)=>{
-  // res.status(404).json({
-  //   status:'Fail',
-  //   message:`can't find ${req.originalUrl}`
-  // })
-  // const err=new Error(`can't find ${req.originalUrl}`);
-  // err.status='fail';
-  // err.statusCode=404;
 
   next(new AppError(`can't find ${req.originalUrl}`,404));
 }) 
